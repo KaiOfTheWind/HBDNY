@@ -9,9 +9,10 @@
       padding: 0;
       overflow: hidden;
       height: 100%;
-      background: radial-gradient(ellipse at bottom, #0b0c10 0%, #000000 100%);
+      background: radial-gradient(ellipse at center, #080758 0%, #2e2e5e 100%);
       font-family: 'Arial', sans-serif;
       color: white;
+      cursor: none; /* Hide default cursor */
     }
 
     canvas {
@@ -77,6 +78,90 @@
       from { text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
       to   { text-shadow: 0 0 20px #0ff, 0 0 40px #0ff; }
     }
+
+    .shooting-star {
+      position: absolute;
+      width: 2px;
+      height: 100px;
+      background: linear-gradient(45deg, white, rgba(255, 255, 255, 0));
+      opacity: 0.8;
+      transform: rotate(45deg);
+      z-index: 0;
+      animation: shoot 1s linear forwards;
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translate(0, 0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(-600px, 600px) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    /* Star-shaped cursor */
+    @keyframes cursorGlow {
+      0% { box-shadow: 0 0 8px #fff; }
+      50% { box-shadow: 0 0 20px #ff0; }
+      100% { box-shadow: 0 0 8px #fff; }
+    }
+
+    .star-cursor {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      background-color: yellow;
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%,
+                         50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      pointer-events: none;
+      z-index: 9999;
+      animation: cursorGlow 2s infinite ease-in-out;
+      transition: background-color 0.3s ease;
+    }
+
+    .star-cursor.clicked {
+      background-color: magenta;
+      box-shadow: 0 0 20px magenta, 0 0 30px magenta;
+    }
+
+    /* Particles */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background-color: white;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 1;
+      animation: particleFade 0.6s ease-out forwards;
+    }
+
+    @keyframes particleFade {
+      to {
+        transform: translate(var(--dx), var(--dy));
+        opacity: 0;
+      }
+    }
+
+    /* Cake image */
+    .birthday-cake {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 250px;
+      height: auto;
+      z-index: 2;
+      animation: floatCake 3s ease-in-out infinite;
+    }
+
+    @keyframes floatCake {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-10px); }
+    }
   </style>
 </head>
 <body>
@@ -86,13 +171,30 @@
 
   <div class="message">
     <h1>Happy Birthday, Nancy! 🎉</h1>
-    <p>Wishing you love, joy, and stardust on your special night.</p>
+    <p>Wishing you love, joy, and stardust on your special night.And I wish you joy and happiness
+But above all this, I wish you love
+And I will always love you
+I will always love you
+I will always love you
+I will always love you
+I will always love you
+I, I will always love you
+You
+Darling, I love you</p>
   </div>
 
   <canvas id="fireworksCanvas"></canvas>
 
+  <!-- Birthday Cake Image -->
+  <img src="C:\Users\carcamacho\OneDrive - Tesla\Documents\VisualStudio\cakestar.PNG"
+       alt="Birthday Cake"
+       class="birthday-cake">
+
+  <!-- Custom Star Cursor -->
+  <div class="star-cursor" id="customCursor"></div>
+
   <script>
-    // Stars
+    // Star background
     const starsContainer = document.getElementById('stars');
     for (let i = 0; i < 150; i++) {
       const star = document.createElement('div');
@@ -102,6 +204,22 @@
       star.style.animationDelay = `${Math.random() * 2}s`;
       starsContainer.appendChild(star);
     }
+
+    // Shooting stars
+    function createShootingStar() {
+      const star = document.createElement('div');
+      star.classList.add('shooting-star');
+      star.style.top = `${Math.random() * window.innerHeight / 2}px`;
+      star.style.left = `${Math.random() * window.innerWidth}px`;
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 1000);
+    }
+
+    setInterval(() => {
+      if (Math.random() > 0.7) {
+        createShootingStar();
+      }
+    }, 1000);
 
     // Fireworks
     const canvas = document.getElementById('fireworksCanvas');
@@ -194,6 +312,49 @@
     window.addEventListener('resize', () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+    });
+
+    // Custom star cursor follow
+    const starCursor = document.getElementById('customCursor');
+    document.addEventListener('mousemove', (e) => {
+      starCursor.style.left = `${e.clientX - 12}px`;
+      starCursor.style.top = `${e.clientY - 12}px`;
+    });
+
+    // Click: glow, change color, emit particles
+    document.addEventListener('click', (e) => {
+      const colors = ['magenta', 'cyan', 'lime', 'orange', 'red', 'aqua'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+      starCursor.classList.add('clicked');
+      starCursor.style.backgroundColor = randomColor;
+      starCursor.style.boxShadow = `0 0 20px ${randomColor}, 0 0 30px ${randomColor}`;
+
+      setTimeout(() => {
+        starCursor.classList.remove('clicked');
+        starCursor.style.backgroundColor = 'yellow';
+        starCursor.style.boxShadow = '';
+      }, 300);
+
+      // Emit particles
+      for (let i = 0; i < 12; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        particle.style.backgroundColor = randomColor;
+
+        const angle = Math.random() * 2 * Math.PI;
+        const distance = 30 + Math.random() * 20;
+        const dx = Math.cos(angle) * distance + 'px';
+        const dy = Math.sin(angle) * distance + 'px';
+
+        particle.style.left = `${e.clientX - 3}px`;
+        particle.style.top = `${e.clientY - 3}px`;
+        particle.style.setProperty('--dx', dx);
+        particle.style.setProperty('--dy', dy);
+
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 600);
+      }
     });
   </script>
 
