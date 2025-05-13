@@ -151,17 +151,18 @@
       }
     }
 
-    /* Cake image */
     .birthday-cake {
-      position: absolute;
-      bottom: 35%;
-      left: 20%;
-      transform: translateX(-50%);
-      width: 250px;
-      height: auto;
-      z-index: 5;
-      animation: floatCake 3s ease-in-out infinite;
-      opacity: 80;
+    position: absolute;
+    display: block;
+    margin: 40px auto 0 auto;
+    width: 500px;
+    max-width: 80%;
+    height: auto;
+    animation: floatCake 3s ease-in-out infinite;
+    opacity: 0.8;
+    left: 50%;
+    z-index: 1;
+
     }
 
     .birthday-cake.hidden {
@@ -247,10 +248,11 @@
 <br>
 
 </p>
-  </div>
-
   <!-- 🎂 Birthday Cake (Initially Hidden) -->
   <img src="cakestar.PNG" alt="Birthday Cake" class="birthday-cake hidden">
+
+  </div>
+
 
   <canvas id="fireworksCanvas"></canvas>
   <div class="star-cursor" id="customCursor"></div>
@@ -444,3 +446,4 @@
   </script>
 </body>
 </html>
+
