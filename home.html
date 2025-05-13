@@ -7,12 +7,12 @@
     html, body {
       margin: 0;
       padding: 0;
-      overflow: hidden;
       height: 100%;
       background: radial-gradient(ellipse at center, #080758 0%, #2e2e5e 100%);
-      font-family: 'Arial', sans-serif;
+      font-family: 'Tahoma', cursive;
       color: white;
-      cursor: none; /* Hide default cursor */
+      cursor: none;
+      overflow-y: scroll;
     }
 
     canvas {
@@ -55,23 +55,30 @@
       50% { opacity: 1; }
     }
 
-    .message {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      z-index: 2;
-    }
+        .message {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        text-align: center;
+        z-index: 2;
+        padding-top: 80px;
+        }
 
-    .message h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
+        .message h1 {
+        font-size: min(2em, 28vw);
+        margin: 20px auto;
+        animation: glow 2s ease-in-out infinite alternate;
+        max-width: 90vw;
+        width: 100%;
+        word-wrap: break-word;
+        text-align: center;
+        }
 
     .message p {
-      font-size: 1.5em;
+      
+      font-size: relative;
+      text-align: center;
     }
 
     @keyframes glow {
@@ -83,7 +90,7 @@
       position: absolute;
       width: 2px;
       height: 100px;
-      background: linear-gradient(45deg, white, rgba(255, 255, 255, 0));
+      background: linear-gradient(45deg, white, rgba(5, 1, 36, 0));
       opacity: 0.8;
       transform: rotate(45deg);
       z-index: 0;
@@ -101,13 +108,6 @@
       }
     }
 
-    /* Star-shaped cursor */
-    @keyframes cursorGlow {
-      0% { box-shadow: 0 0 8px #fff; }
-      50% { box-shadow: 0 0 20px #ff0; }
-      100% { box-shadow: 0 0 8px #fff; }
-    }
-
     .star-cursor {
       position: absolute;
       width: 24px;
@@ -121,12 +121,17 @@
       transition: background-color 0.3s ease;
     }
 
+    @keyframes cursorGlow {
+      0% { box-shadow: 0 0 8px #fff; }
+      50% { box-shadow: 0 0 20px #ff0; }
+      100% { box-shadow: 0 0 8px #fff; }
+    }
+
     .star-cursor.clicked {
       background-color: magenta;
       box-shadow: 0 0 20px magenta, 0 0 30px magenta;
     }
 
-    /* Particles */
     .particle {
       position: absolute;
       width: 6px;
@@ -149,13 +154,18 @@
     /* Cake image */
     .birthday-cake {
       position: absolute;
-      bottom: 30px;
-      left: 50%;
+      bottom: 35%;
+      left: 20%;
       transform: translateX(-50%);
       width: 250px;
       height: auto;
-      z-index: 2;
+      z-index: 5;
       animation: floatCake 3s ease-in-out infinite;
+      opacity: 80;
+    }
+
+    .birthday-cake.hidden {
+      display: none;
     }
 
     @keyframes floatCake {
@@ -169,73 +179,80 @@
   <div class="moon"></div>
   <div class="stars" id="stars"></div>
 
-<div class="message">
+  <div class="message">
+      <p>
+    <br>
+    <br>
+    <br>
+    </p>
     <h1>Feliz cumple, Nancy! 🎉</h1>
-    <p>Feliz cumpleanios! Espero de todo corazon haya sido un dia muy alegre y 
-        que hayas podido disfrutarlo mucho con tu familia y demas seres queridos.
+    <p>
+      Feliz cumpleaños! Espero de todo corazón haya sido un día muy alegre y 
+      que hayas podido disfrutarlo mucho con tu familia y demás seres queridos.
 
-      Te deseo 7 cosas hoy y el resto de los dias que le siguen:
-      
-      <h1>⭐ Salud </h1>
-      Que nunca te falte la salud,
-      una fortaleza arraigada en el cuerpo y la calma,
-      raíz que sustente dia a dia,
-      y nos mantenga adelante el fuego del alma.
-      
-       <h1>⭐ Exito </h1>
-      
-      Que siempre te siga el éxito fiel,
-      no solo en victorias, también en caídas,
-      pues quien se levanta con paso y valor,
-      conquista su mundo y renace su vida.
-      
-      <h1> ⭐ Abundancia </h1>
-      
-      Que fluya sin freno la abundancia en ti,
-      no solo en lo externo, también en lo eterno;
-      que el pan compartido, el tiempo ofrecido,
-      te llenen de luz dentro de lo más interno.
-      
-      <h1> ⭐ Sabidura </h1>
-      
-      Que te guíe la sabiduría interior,
-      no solo hecha de libros, sino de experiencias,
-      de errores, de risas, de cada lección
-      que deja en la piel su eterna presencia.
-      
-       <h1>⭐ Diversion </h1>
-      
-      Que nunca te falte la diversión,
-      el juego, el asombro, la risa sincera,
-      porque en cada día que canta y se ríe
-      se esconde una vida dichosa y entera.
-      
-       <h1>⭐ Afecto </h1>
-      
-      Que vivas rodeada de afecto constante,
-      miradas que abrazan, palabras que cuidan,
-      presencias que llegan y no piden nada,
-      que dan y se quedan, que curan y que se anidan.
-      
-       <h1>⭐ Felicidad </h1>
-      
-      Y al final de todo que te abrace la felicidad,
-      no como meta, sino como una senda:
-      en cada momento, en cada detalle,
-      un canto sencillo que el alma encienda.
-      
+      Te deseo 7 cosas hoy y el resto de los días que le siguen:
+    </p>
+
+    <h1>⭐ Salud </h1>
+    <p>Que nunca te falte la salud,<br>
+    una fortaleza arraigada en el cuerpo y la calma,<br>
+    raíz que sustente dia a dia,<br>
+    y nos mantenga adelante el fuego del alma.<br>
+    </p>
+
+    <h1>⭐ Éxito </h1>
+    <p>Que siempre te siga el éxito fiel,<br>
+    no solo en victorias, también en caídas,<br>
+    pues quien se levanta con paso y valor,<br>
+    conquista su mundo y renace su vida.<br>
+    </p>
+
+    <h1>⭐ Abundancia </h1>
+    <p>Que fluya sin freno la abundancia en ti,<br>
+    no solo en lo externo, también en lo eterno;<br>
+    que el pan compartido, el tiempo ofrecido,<br>
+    te llenen de luz dentro de lo más interno.<br>
+    </p>
+
+    <h1>⭐ Sabiduría </h1>
+    <p>Que te guíe la sabiduría interior,<br>
+    no solo hecha de libros, sino de experiencias,<br>
+    de errores, de risas, de cada lección<br>
+    que deja en la piel su eterna presencia.<br>
+    </p>
+
+    <h1>⭐ Diversión </h1>
+    <p>Que nunca te falte la diversión,<br>
+    el juego, el asombro, la risa sincera,<br>
+    porque en cada día que canta y se ríe<br>
+    se esconde una vida dichosa y entera.<br>
+    </p>
+
+    <h1>⭐ Afecto </h1>
+    <p>Que vivas rodeada de afecto constante,<br>
+    miradas que abrazan, palabras que cuidan,<br>
+    presencias que llegan y no piden nada,<br>
+    que dan y se quedan, que curan y que se anidan.<br>
+    </p>
+
+    <h1>⭐ Felicidad </h1>
+    <p>Y al final de todo que te abrace la felicidad,<br>
+    Y al final de todo que te abrace la felicidad,<br>
+    no como meta, sino como una senda:<br>
+    en cada momento, en cada detalle,<br>
+    un canto sencillo que el alma encienda.<br>
+<br>
+<br>
+<br>
+<br>
 
 </p>
   </div>
 
+  <!-- 🎂 Birthday Cake (Initially Hidden) -->
+  <img src="cakestar.PNG" alt="Birthday Cake" class="birthday-cake hidden">
+
   <canvas id="fireworksCanvas"></canvas>
-
-  <!-- Birthday Cake Image -->
-  <img src="cakestar.PNG"
-       alt="Birthday Cake"
-       class="birthday-cake">
-
-  <!-- Custom Star Cursor -->
   <div class="star-cursor" id="customCursor"></div>
 
   <script>
@@ -359,14 +376,13 @@
       canvas.height = window.innerHeight;
     });
 
-    // Custom star cursor follow
+    // Custom star cursor
     const starCursor = document.getElementById('customCursor');
     document.addEventListener('mousemove', (e) => {
       starCursor.style.left = `${e.clientX - 12}px`;
       starCursor.style.top = `${e.clientY - 12}px`;
     });
 
-    // Click: glow, change color, emit particles
     document.addEventListener('click', (e) => {
       const colors = ['magenta', 'cyan', 'lime', 'orange', 'red', 'aqua'];
       const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -381,7 +397,6 @@
         starCursor.style.boxShadow = '';
       }, 300);
 
-      // Emit particles
       for (let i = 0; i < 12; i++) {
         const particle = document.createElement('div');
         particle.classList.add('particle');
@@ -401,7 +416,31 @@
         setTimeout(() => particle.remove(), 600);
       }
     });
-  </script>
 
+    // 🎂 Show cake after 10 seconds
+    setTimeout(() => {
+      const cake = document.querySelector('.birthday-cake');
+      cake.classList.remove('hidden');
+    }, 10000);
+      let cakeShown = false;
+
+  window.addEventListener('scroll', () => {
+    const message = document.querySelector('.message');
+    const cake = document.querySelector('.birthday-cake');
+    const audio = document.getElementById('birthdaySound');
+
+    const bottomReached =
+      window.scrollY + window.innerHeight >= message.offsetTop + message.offsetHeight;
+
+    if (bottomReached && !cakeShown) {
+      cakeShown = true;
+      cake.classList.remove('hidden');
+      audio.play();
+      launchConfetti();
+    }
+  });
+
+
+  </script>
 </body>
 </html>
